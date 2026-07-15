@@ -1,3 +1,4 @@
 .env.local
+dist/
 __pycache__/
 *.pyc

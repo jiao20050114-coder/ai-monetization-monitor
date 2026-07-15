@@ -42,7 +42,7 @@ python3 scripts/refresh_openrouter.py
 
 在 `Settings → Pages → Build and deployment` 中，将 Source 设为 **GitHub Actions**。不要选择 `Deploy from a branch`，因为本项目由定时工作流直接上传并部署静态页面。
 
-腾讯云 CloudBase 使用 `npm run build` 生成仅含看板资源的 `dist/` 目录；个人仓库绑定 `main` 分支后，代码或数据提交会触发重新构建与发布。
+腾讯云 CloudBase 使用 `npm run build` 生成仅含看板资源的 `dist/` 目录；`deploy-cloudbase.yml` 会在 `main` 分支收到代码或数据提交后，使用 GitHub 加密变量完成重新构建与发布。
 
 ## 数据边界
 
