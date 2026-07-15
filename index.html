@@ -137,7 +137,7 @@
   <script src="assets/echarts.min.js"></script>
   <script>
     (() => {
-      const cacheWindow = Math.floor(Date.now() / 21600000);
+      const cacheWindow = Date.now();
       const load = (path) => new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = `${path}?v=${cacheWindow}`;
