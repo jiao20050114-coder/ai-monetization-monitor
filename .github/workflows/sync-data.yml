@@ -1,0 +1,50 @@
+name: Sync tracker data
+
+on:
+  schedule:
+    - cron: "27 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: tracker-data-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate and synchronize public tracker data
+        run: python scripts/sync_tracker_data.py
+      - name: Refresh OpenRouter from the official Datasets API
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python scripts/refresh_openrouter.py
+      - name: Commit the latest validated snapshot
+        run: |
+          git config user.name "tracker-sync-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/data.js data/sync-meta.js
+          if ! git diff --cached --quiet; then
+            git commit -m "data: sync AI Monetization Tracker"
+            git push
+          fi
+      - name: Upload the validated dashboard
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
