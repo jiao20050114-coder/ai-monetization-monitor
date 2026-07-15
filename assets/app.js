@@ -245,7 +245,7 @@
     addChart('gpuChart', {
       xAxis:{type:'category',boundaryGap:false,data:dates,axisLabel:{formatter:(value)=>String(value).slice(5),color:'#8290a0',fontSize:9},axisLine:{lineStyle:{color:'#cfd7d3'}},axisTick:{show:false}},
       yAxis:{type:'value',name:'$/GPU-hr',scale:true,nameTextStyle:{color:'#9aa5b2',fontSize:9},axisLabel:{color:'#8290a0',fontSize:9,formatter:'${value}'},splitLine:{lineStyle:{color:'#e8ece9',type:'dashed'}}},
-      series:entries.map(([name,points],index)=>{const map=new Map(points);return{name,type:'line',data:dates.map(date=>map.has(date)?map.get(date)[1]:null),showSymbol:false,smooth:.1,lineStyle:{width:2,color:COLORS[index]},itemStyle:{color:COLORS[index]}}})
+      series:entries.map(([name,points],index)=>{const map=new Map(points);return{name,type:'line',data:dates.map(date=>map.has(date)?map.get(date):null),showSymbol:false,smooth:.1,lineStyle:{width:2,color:COLORS[index]},itemStyle:{color:COLORS[index]}}})
     });
   }
 
