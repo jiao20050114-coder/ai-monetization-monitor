@@ -42,6 +42,8 @@ python3 scripts/refresh_openrouter.py
 
 在 `Settings → Pages → Build and deployment` 中，将 Source 设为 **GitHub Actions**。不要选择 `Deploy from a branch`，因为本项目由定时工作流直接上传并部署静态页面。
 
+腾讯云 CloudBase 使用 `npm run build` 生成仅含看板资源的 `dist/` 目录；个人仓库绑定 `main` 分支后，代码或数据提交会触发重新构建与发布。
+
 ## 数据边界
 
 ARR 属于基于公开检查点的模型估算，不是审计收入。OpenRouter 跨供应商 Token 口径并不完全一致。原站会员区的 ARR Nowcast 和 Compute Deals 没有包含在公开数据 bundle 中，本项目不会抓取或伪造这些字段。
