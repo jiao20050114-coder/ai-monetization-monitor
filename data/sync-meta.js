@@ -1,1 +1,1 @@
-window.__SYNC_META__={"ok":true,"synced_at":"2026-07-20T09:38:53+00:00","source_updated_at":"2026-07-18","source_url":"https://raw.githubusercontent.com/aokunyade/ai-monetization-tracker/main/data/data.js","sample_sections":[],"schema":1};
+window.__SYNC_META__={"ok":true,"synced_at":"2026-07-20T14:35:59+00:00","source_updated_at":"2026-07-18","source_url":"https://raw.githubusercontent.com/aokunyade/ai-monetization-tracker/main/data/data.js","sample_sections":[],"schema":1};
