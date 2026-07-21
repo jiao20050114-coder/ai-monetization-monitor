@@ -51,3 +51,28 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Commits pushed with GITHUB_TOKEN do not trigger other workflows.
+      # Deploy CloudBase in this same scheduled run so the China-hosted site
+      # always receives the snapshot that was just validated above.
+      - name: Set up Node.js for CloudBase
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+
+      - name: Build CloudBase hosting bundle
+        run: npm run build
+
+      - name: Install CloudBase CLI
+        run: npm install --global @cloudbase/cli
+
+      - name: Authenticate to CloudBase
+        env:
+          TCB_SECRET_ID: ${{ secrets.TCB_SECRET_ID }}
+          TCB_SECRET_KEY: ${{ secrets.TCB_SECRET_KEY }}
+        run: tcb login --apiKeyId "$TCB_SECRET_ID" --apiKey "$TCB_SECRET_KEY"
+
+      - name: Deploy the validated snapshot to CloudBase
+        env:
+          TCB_ENV_ID: ${{ secrets.TCB_ENV_ID }}
+        run: tcb hosting deploy ./dist / -e "$TCB_ENV_ID"
